@@ -5,8 +5,6 @@ import { NextPageWithLayout } from "../_app";
 
 import { Button, TextInput } from "@/components";
 import { cn } from "@/utils/style";
-import { ReactElement } from "react";
-import { LoginRegisterLayout } from "@/layouts";
 
 const Login: NextPageWithLayout = () => {
   return (
@@ -61,8 +59,6 @@ const Login: NextPageWithLayout = () => {
   );
 };
 
-Login.getLayout = (page: ReactElement) => {
-  return <LoginRegisterLayout>{page}</LoginRegisterLayout>;
-};
+Login.layout = "Main";
 
 export default Login;

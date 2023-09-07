@@ -1,8 +1,8 @@
 import "@/styles/globals.css";
 import type { NextPage } from "next";
 import type { AppProps } from "next/app";
-import type { ReactElement, ReactNode } from "react";
 import { Poppins } from "next/font/google";
+import { Layouts, LayoutKeys } from "@/layouts";
 
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -13,15 +13,17 @@ const poppins = Poppins({
 });
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
-  getLayout?: (page: ReactElement) => ReactNode;
+  layout?: LayoutKeys;
 };
 
 type AppPropsWithLayout = AppProps & {
-  Component: NextPageWithLayout;
+  Component: NextPageWithLayout & {
+    layout: LayoutKeys;
+  };
 };
 
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
-  const getLayout = Component.getLayout ?? ((page) => page);
+  const Layout = Layouts[Component.layout] ?? ((page) => page);
 
   return (
     <>
@@ -34,7 +36,9 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
         }
       `}</style>
 
-      {getLayout(<Component {...pageProps} />)}
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
     </>
   );
 }
