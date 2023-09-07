@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
+import { signIn } from "next-auth/react";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 import { NextPageWithLayout } from "../_app";
@@ -44,7 +45,13 @@ const Login: NextPageWithLayout = () => {
         </div>
 
         <div className={cn("w-full flex flex-col gap-2 mb-10")}>
-          <Button variant={"outline-secondary"} className={cn("text-sm")}>
+          <Button
+            variant={"outline-secondary"}
+            className={cn("text-sm")}
+            onClick={() =>
+              signIn("google", { callbackUrl: "http://localhost:3000" })
+            }
+          >
             <FcGoogle size={20} />
             Sign in with Google
           </Button>

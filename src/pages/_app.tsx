@@ -2,6 +2,8 @@ import "@/styles/globals.css";
 import type { NextPage } from "next";
 import type { AppProps } from "next/app";
 import { Poppins } from "next/font/google";
+import { SessionProvider } from "next-auth/react";
+
 import { Layouts, LayoutKeys } from "@/layouts";
 
 const poppins = Poppins({
@@ -22,7 +24,10 @@ type AppPropsWithLayout = AppProps & {
   };
 };
 
-export default function App({ Component, pageProps }: AppPropsWithLayout) {
+export default function App({
+  Component,
+  pageProps: { session, ...pageProps },
+}: AppPropsWithLayout) {
   const Layout = Layouts[Component.layout] ?? ((page) => page);
 
   return (
@@ -36,9 +41,15 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
         }
       `}</style>
 
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <SessionProvider session={session}>
+        {Component.layout ? (
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        ) : (
+          <Component {...pageProps} />
+        )}
+      </SessionProvider>
     </>
   );
 }
