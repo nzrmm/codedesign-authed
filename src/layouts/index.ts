@@ -1,7 +1,7 @@
 import LoginRegisterLayout from "@/layouts/login-register-layout";
 
 export const Layouts = {
-  Main: LoginRegisterLayout,
+  LoginRegister: LoginRegisterLayout,
 };
 
 export type LayoutKeys = keyof typeof Layouts;
