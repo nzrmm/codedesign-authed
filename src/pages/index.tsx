@@ -1,5 +1,7 @@
 import { useRouter } from "next/router";
-import { useSession, signOut } from "next-auth/react";
+import type { GetServerSideProps } from "next";
+import { Session } from "next-auth";
+import { useSession, signOut, getSession } from "next-auth/react";
 
 import { Button } from "@/components";
 import { cn } from "@/utils/style";
@@ -41,6 +43,25 @@ const Home = () => {
       )}
     </div>
   );
+};
+
+export const getServerSideProps: GetServerSideProps<{
+  session: Session;
+}> = async ({ req }) => {
+  const session = await getSession({ req });
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: { session },
+  };
 };
 
 export default Home;
