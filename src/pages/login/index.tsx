@@ -55,7 +55,13 @@ const Login: NextPageWithLayout = () => {
             <FcGoogle size={20} />
             Sign in with Google
           </Button>
-          <Button variant={"outline-secondary"} className={cn("text-sm")}>
+          <Button
+            variant={"outline-secondary"}
+            className={cn("text-sm")}
+            onClick={() =>
+              signIn("github", { callbackUrl: "http://localhost:3000" })
+            }
+          >
             <FaGithub size={20} />
             Sign in with Github
           </Button>
