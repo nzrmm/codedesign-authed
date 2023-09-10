@@ -17,7 +17,7 @@ const Home = () => {
       {status === "authenticated" && (
         <div className={cn("flex flex-col items-center")}>
           <p className={cn("text-4xl font-semibold mb-4")}>
-            Hello {session.user?.name}
+            Hello {session.user?.name || session.user?.email}
           </p>
           <Button
             variant={"outline-secondary"}

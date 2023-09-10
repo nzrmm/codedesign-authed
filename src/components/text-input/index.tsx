@@ -37,10 +37,4 @@ const TextInput = ({
   );
 };
 
-TextInput.defaultProps = {
-  type: "text",
-  id: "text-input",
-  placeholder: "",
-};
-
 export default TextInput;

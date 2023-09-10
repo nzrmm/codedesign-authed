@@ -1,14 +1,32 @@
+import { useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
-import { NextPageWithLayout } from "../_app";
+import { NextPageWithLayout } from "@/pages/_app";
 
 import { Button, TextInput } from "@/components";
 import { cn } from "@/utils/style";
 
 const Login: NextPageWithLayout = () => {
+  const router = useRouter();
+  const [user, setUser] = useState({} as { email: string; password: string });
+
+  const handleLogin = async () => {
+    const status = await signIn("credentials", {
+      redirect: false,
+      email: user.email,
+      password: user.password,
+      callbackUrl: "/",
+    });
+
+    if (status?.ok && status?.url) {
+      router.push(status.url);
+    }
+  };
+
   return (
     <>
       <Head>
@@ -32,12 +50,27 @@ const Login: NextPageWithLayout = () => {
         </div>
 
         <div className={cn("w-full flex flex-col gap-4 mb-8")}>
-          <TextInput type="email" placeholder="Email" />
-          <TextInput type="password" placeholder="Password" />
+          <TextInput
+            type="email"
+            placeholder="Email"
+            value={user.email || ""}
+            onChange={({ target }) => {
+              setUser({ ...user, email: target.value });
+            }}
+          />
+
+          <TextInput
+            type="password"
+            placeholder="Password"
+            value={user.password || ""}
+            onChange={({ target }) => {
+              setUser({ ...user, password: target.value });
+            }}
+          />
         </div>
 
         <div className={cn("w-full mb-4")}>
-          <Button>Login</Button>
+          <Button onClick={handleLogin}>Login</Button>
         </div>
 
         <div className={cn("mb-4")}>
@@ -53,7 +86,7 @@ const Login: NextPageWithLayout = () => {
             }
           >
             <FcGoogle size={20} />
-            Sign in with Google
+            Login with Google
           </Button>
           <Button
             variant={"outline-secondary"}
@@ -63,7 +96,7 @@ const Login: NextPageWithLayout = () => {
             }
           >
             <FaGithub size={20} />
-            Sign in with Github
+            Login with Github
           </Button>
         </div>
 
