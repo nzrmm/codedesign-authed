@@ -13,6 +13,7 @@
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
     "autoprefixer": "10.4.15",
+    "bcryptjs": "^2.4.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "eslint": "8.48.0",
@@ -28,6 +29,7 @@
     "typescript": "5.2.2"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.3",
     "mongoose": "^7.5.0"
   }
 }

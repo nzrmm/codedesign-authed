@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const MONGO_URI = process.env.MONGO_URI || "";
 
-const connect = async () => {
+const connection = async () => {
   try {
     const { connection } = await mongoose.connect(MONGO_URI);
 
@@ -14,4 +14,4 @@ const connect = async () => {
   }
 };
 
-export default connect;
+export default connection;
