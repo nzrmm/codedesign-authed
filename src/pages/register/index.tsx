@@ -1,30 +1,45 @@
 import { useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
+import * as yup from "yup";
 import { useRouter } from "next/router";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import { NextPageWithLayout } from "@/pages/_app";
 
 import { Button, TextInput } from "@/components";
 import { cn } from "@/utils/style";
 
+const schema = yup
+  .object({
+    username: yup.string().min(3).max(20).required(),
+    email: yup.string().email().required(),
+    password: yup.string().min(3).required(),
+    confirmPassword: yup
+      .string()
+      .oneOf([yup.ref("password")])
+      .required(),
+  })
+  .required();
+
 const Register: NextPageWithLayout = () => {
   const router = useRouter();
-  const [user, setUser] = useState(
-    {} as {
-      username: string;
-      email: string;
-      password: string;
-      confirmPassword: string;
-    }
-  );
 
-  const handleRegister = async () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  const handleRegister: SubmitHandler<FieldValues> = async (data) => {
     const options = {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(user),
+      body: JSON.stringify(data),
     };
 
     await fetch("http://localhost:3000/api/auth/register", options)
@@ -58,41 +73,41 @@ const Register: NextPageWithLayout = () => {
 
         <div className={cn("w-full flex flex-col gap-4 mb-8")}>
           <TextInput
+            required
+            id="username"
             type="text"
             placeholder="Username"
-            value={user.username || ""}
-            onChange={({ target }) => {
-              setUser({ ...user, username: target.value });
-            }}
+            register={register}
+            errors={errors}
           />
           <TextInput
+            required
+            id="email"
             type="email"
             placeholder="Email"
-            value={user.email || ""}
-            onChange={({ target }) => {
-              setUser({ ...user, email: target.value });
-            }}
+            register={register}
+            errors={errors}
           />
           <TextInput
+            required
+            id="password"
             type="password"
             placeholder="Password"
-            value={user.password || ""}
-            onChange={({ target }) => {
-              setUser({ ...user, password: target.value });
-            }}
+            register={register}
+            errors={errors}
           />
           <TextInput
+            required
+            id="confirmPassword"
             type="password"
             placeholder="Confirm Password"
-            value={user.confirmPassword || ""}
-            onChange={({ target }) => {
-              setUser({ ...user, confirmPassword: target.value });
-            }}
+            register={register}
+            errors={errors}
           />
         </div>
 
         <div className={cn("w-full mb-10")}>
-          <Button onClick={handleRegister}>Login</Button>
+          <Button onClick={handleSubmit(handleRegister)}>Register</Button>
         </div>
 
         <div>
