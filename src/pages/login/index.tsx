@@ -1,24 +1,40 @@
-import { useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
+import * as yup from "yup";
 import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import { NextPageWithLayout } from "@/pages/_app";
 
 import { Button, TextInput } from "@/components";
 import { cn } from "@/utils/style";
 
+const schema = yup
+  .object({
+    email: yup.string().email().required(),
+    password: yup.string().required(),
+  })
+  .required();
+
 const Login: NextPageWithLayout = () => {
   const router = useRouter();
-  const [user, setUser] = useState({} as { email: string; password: string });
 
-  const handleLogin = async () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  const handleLogin: SubmitHandler<FieldValues> = async (data) => {
     const status = await signIn("credentials", {
       redirect: false,
-      email: user.email,
-      password: user.password,
+      email: data.email,
+      password: data.password,
       callbackUrl: "/",
     });
 
@@ -51,26 +67,26 @@ const Login: NextPageWithLayout = () => {
 
         <div className={cn("w-full flex flex-col gap-4 mb-8")}>
           <TextInput
+            required
+            id="email"
             type="email"
             placeholder="Email"
-            value={user.email || ""}
-            onChange={({ target }) => {
-              setUser({ ...user, email: target.value });
-            }}
+            register={register}
+            errors={errors}
           />
 
           <TextInput
+            required
+            id="password"
             type="password"
             placeholder="Password"
-            value={user.password || ""}
-            onChange={({ target }) => {
-              setUser({ ...user, password: target.value });
-            }}
+            register={register}
+            errors={errors}
           />
         </div>
 
         <div className={cn("w-full mb-4")}>
-          <Button onClick={handleLogin}>Login</Button>
+          <Button onClick={handleSubmit(handleLogin)}>Login</Button>
         </div>
 
         <div className={cn("mb-4")}>
