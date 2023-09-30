@@ -7,14 +7,11 @@ const buttonVariants = cva(
   {
     variants: {
       size: {
-        md: "h-12 px-6 text-base",
+        md: "h-16 px-6 text-base",
       },
       variant: {
-        primary: [
-          "bg-gradient-to-br from-blue-500 to-purple-500 text-white",
-          "hover:from-purple-500 hover:to-blue-500",
-        ],
-        "outline-secondary": ["border border-neutral-300 text-neutral-800"],
+        primary: ["bg-[#4F46E5] text-white", "hover:bg-[#4F46E5]/80"],
+        outline: ["border border-neutral-300"],
       },
     },
     defaultVariants: {
