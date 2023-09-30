@@ -56,8 +56,8 @@ const Register: NextPageWithLayout = () => {
         <meta name="description" content="a register page for user" />
       </Head>
 
-      <div className={cn("w-full min-h-screen grid grid-cols-2")}>
-        <div className={cn("px-36 py-24")}>
+      <div className={cn("w-full min-h-screen grid xl:grid-cols-2")}>
+        <div className={cn("px-8 py-12", "sm:px-36 sm:py-24")}>
           <Logo className={cn("mb-14")} />
 
           <div className={cn("mb-11")}>
@@ -119,7 +119,7 @@ const Register: NextPageWithLayout = () => {
           </div>
         </div>
 
-        <div className={cn("relative w-full h-full")}>
+        <div className={cn("lg:block relative w-full h-full", "hidden")}>
           <Image fill src={"/images/register-image.png"} alt="register-image" />
         </div>
       </div>
