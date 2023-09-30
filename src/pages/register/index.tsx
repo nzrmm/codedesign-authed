@@ -1,5 +1,5 @@
-import { useState } from "react";
 import Head from "next/head";
+import Image from "next/image";
 import Link from "next/link";
 import * as yup from "yup";
 import { useRouter } from "next/router";
@@ -7,7 +7,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import { NextPageWithLayout } from "@/pages/_app";
 
-import { Button, TextInput } from "@/components";
+import { Logo, Button, TextInput } from "@/components";
 import { cn } from "@/utils/style";
 
 const schema = yup
@@ -52,71 +52,75 @@ const Register: NextPageWithLayout = () => {
   return (
     <>
       <Head>
-        <title>Register</title>
+        <title>Register - Codedesign Authed</title>
         <meta name="description" content="a register page for user" />
       </Head>
 
-      <div className={cn("flex flex-col justify-center items-center px-20")}>
-        <div className={cn("w-full text-center mb-10")}>
-          <p className={cn("text-4xl font-semibold text-neutral-900 mb-4")}>
-            Register
-          </p>
-          <p
-            className={cn(
-              "mx-auto text-sm text-neutral-500 leading-relaxed w-10/12"
-            )}
-          >
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam
-            harum natus numquam.
-          </p>
+      <div className={cn("w-full min-h-screen grid grid-cols-2")}>
+        <div className={cn("px-36 py-24")}>
+          <Logo className={cn("mb-14")} />
+
+          <div className={cn("mb-11")}>
+            <h1 className={cn("font-semibold text-4xl mb-[10px]")}>
+              Bikin akun baru
+            </h1>
+            <p className={cn("text-[#4B5563] leading-relaxed")}>
+              Nggak susah kok, kamu cuma tinggal masukin beberapa data aja terus
+              langsung jadi deh!
+            </p>
+          </div>
+
+          <form onSubmit={handleSubmit(handleRegister)} className={cn("mb-8")}>
+            <div className={cn("grid gap-6 mb-8")}>
+              <TextInput
+                id="username"
+                label="Username"
+                type="text"
+                placeholder="Masukkan Username..."
+                register={register}
+                errors={errors}
+              />
+              <TextInput
+                id="email"
+                label="Email"
+                type="email"
+                placeholder="Masukkan email..."
+                register={register}
+                errors={errors}
+              />
+              <TextInput
+                id="password"
+                label="Kata Sandi"
+                type="password"
+                placeholder="Masukkan kata sandi..."
+                register={register}
+                errors={errors}
+              />
+              <TextInput
+                id="confirmPassword"
+                label="Konfirmasi Kata Sandi"
+                type="password"
+                placeholder="Masukkan konfirmasi kata sandi..."
+                register={register}
+                errors={errors}
+              />
+            </div>
+
+            <Button type="submit">Mendaftar</Button>
+          </form>
+
+          <div className={cn("text-center")}>
+            <p className={cn("font-semibold text-[#4B5563]")}>
+              Sudah punya akun ?{" "}
+              <Link href={"/login"} className={cn("text-[#4F46E5]")}>
+                Silahkan login!
+              </Link>
+            </p>
+          </div>
         </div>
 
-        <div className={cn("w-full flex flex-col gap-4 mb-8")}>
-          <TextInput
-            required
-            id="username"
-            type="text"
-            placeholder="Username"
-            register={register}
-            errors={errors}
-          />
-          <TextInput
-            required
-            id="email"
-            type="email"
-            placeholder="Email"
-            register={register}
-            errors={errors}
-          />
-          <TextInput
-            required
-            id="password"
-            type="password"
-            placeholder="Password"
-            register={register}
-            errors={errors}
-          />
-          <TextInput
-            required
-            id="confirmPassword"
-            type="password"
-            placeholder="Confirm Password"
-            register={register}
-            errors={errors}
-          />
-        </div>
-
-        <div className={cn("w-full mb-10")}>
-          <Button onClick={handleSubmit(handleRegister)}>Register</Button>
-        </div>
-
-        <div>
-          <p className={cn("text-sm text-neutral-500")}>
-            Have an account ?{" "}
-            <Link href={"/login"} className={cn("text-blue-600 underline")}>
-              Login
-            </Link>
-          </p>
+        <div className={cn("relative w-full h-full")}>
+          <Image fill src={"/images/register-image.png"} alt="register-image" />
         </div>
       </div>
     </>
