@@ -1,5 +1,6 @@
 import { ComponentProps } from "react";
 import { cn } from "@/utils/style";
+import { FiAlertCircle } from "react-icons/fi";
 import { cva, type VariantProps } from "class-variance-authority";
 import { FieldErrors, FieldError, UseFormRegister } from "react-hook-form";
 
@@ -55,9 +56,13 @@ const TextInput = ({
       />
 
       {errors && errors[id] && (
-        <span className={cn("text-sm text-rose-500 block px-1 mt-2")}>
-          {(errors[id] as FieldError).message}
-        </span>
+        <div className={cn("flex items-center gap-2 px-1 mt-2")}>
+          <FiAlertCircle color={"#F43F5E"} />
+
+          <span className={cn("text-sm text-rose-500")}>
+            {(errors[id] as FieldError).message}
+          </span>
+        </div>
       )}
     </div>
   );
