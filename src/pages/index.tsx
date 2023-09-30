@@ -20,7 +20,7 @@ const Home = () => {
             Hello {session.user?.name || session.user?.email}
           </p>
           <Button
-            variant={"outline-secondary"}
+            variant={"outline"}
             className={cn("text-sm w-40 h-10")}
             onClick={() => signOut({ callbackUrl: "http://localhost:3000" })}
           >
