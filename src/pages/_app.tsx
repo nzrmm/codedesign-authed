@@ -1,17 +1,16 @@
 import "@/styles/globals.css";
 import type { NextPage } from "next";
 import type { AppProps } from "next/app";
-import { Poppins } from "next/font/google";
+import { Inter } from "next/font/google";
 import { SessionProvider } from "next-auth/react";
 
 import { Layouts, LayoutKeys } from "@/layouts";
 
-const poppins = Poppins({
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+const inter = Inter({
   subsets: ["latin"],
   preload: true,
   display: "swap",
-  variable: "--font-poppins",
+  variable: "--font-inter",
 });
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
@@ -34,10 +33,10 @@ export default function App({
     <>
       <style jsx global>{`
         :root {
-          --font-poppins: ${poppins.style.fontFamily};
+          --font-inter: ${inter.style.fontFamily};
         }
         html {
-          font-family: var(--font-poppins);
+          font-family: var(--font-inter);
         }
       `}</style>
 
